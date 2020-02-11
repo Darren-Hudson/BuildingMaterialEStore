@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BmesRestApi.Database;
+using BmesRestApi.Repositories;
+using BmesRestApi.Repositories.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +31,10 @@ namespace BmesRestApi
         {
             services.AddControllers();
             services.AddDbContext<BmesDbContext>(optionsAction: options => options.UseSqlite(Configuration["Data:BmesRestApi:ConnectionString"]));
+            services.AddTransient<IBrandRepository, BrandRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
